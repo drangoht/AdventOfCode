@@ -13,3 +13,4 @@ D:\CODE\AdventOfCode\2023\AOC2023\Day1\obj\Debug\net8.0\refint\Day1.dll
 D:\CODE\AdventOfCode\2023\AOC2023\Day1\obj\Debug\net8.0\Day1.pdb
 D:\CODE\AdventOfCode\2023\AOC2023\Day1\obj\Debug\net8.0\Day1.genruntimeconfig.cache
 D:\CODE\AdventOfCode\2023\AOC2023\Day1\obj\Debug\net8.0\ref\Day1.dll
+D:\CODE\AdventOfCode\2023\AOC2023\Day1\obj\Debug\net8.0\Day1.sourcelink.json
