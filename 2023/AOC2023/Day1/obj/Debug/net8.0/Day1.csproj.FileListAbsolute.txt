@@ -1,5 +1,4 @@
 D:\CODE\AdventOfCode\2023\AOC2023\Day1\bin\Debug\net8.0\Day1.exe
-D:\CODE\AdventOfCode\2023\AOC2023\Day1\bin\Debug\net8.0\Input.txt
 D:\CODE\AdventOfCode\2023\AOC2023\Day1\bin\Debug\net8.0\Day1.deps.json
 D:\CODE\AdventOfCode\2023\AOC2023\Day1\bin\Debug\net8.0\Day1.runtimeconfig.json
 D:\CODE\AdventOfCode\2023\AOC2023\Day1\bin\Debug\net8.0\Day1.dll
@@ -14,3 +13,4 @@ D:\CODE\AdventOfCode\2023\AOC2023\Day1\obj\Debug\net8.0\Day1.pdb
 D:\CODE\AdventOfCode\2023\AOC2023\Day1\obj\Debug\net8.0\Day1.genruntimeconfig.cache
 D:\CODE\AdventOfCode\2023\AOC2023\Day1\obj\Debug\net8.0\ref\Day1.dll
 D:\CODE\AdventOfCode\2023\AOC2023\Day1\obj\Debug\net8.0\Day1.sourcelink.json
+D:\CODE\AdventOfCode\2023\AOC2023\Day1\bin\Debug\net8.0\Inputs\Input.txt
