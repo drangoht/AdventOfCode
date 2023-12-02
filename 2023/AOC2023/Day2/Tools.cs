@@ -39,5 +39,6 @@ namespace Day2
         {
             games.ForEach(game => { Console.WriteLine(game.Id); });
         }
+
     }
 }
