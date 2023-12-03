@@ -6,16 +6,10 @@ using System.Threading.Tasks;
 
 namespace Day3.Domain
 {
-    public class Coordinate
+    public class Coordinate(int x, int y)
     {
-        public Coordinate(int x,int y)
-        {
-            X = x;
-            Y = y;
-        }
-
-        public int X { get; }
-        public int Y { get; }
+        public int X { get; } = x;
+        public int Y { get; } = y;
         public override string ToString()
         {
             return $"X:{X} Y:{Y}";
