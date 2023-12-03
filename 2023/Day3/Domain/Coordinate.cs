@@ -6,5 +6,19 @@ using System.Threading.Tasks;
 
 namespace Day3.Domain
 {
-    public record Coordinate(int X,int Y);
+    public class Coordinate
+    {
+        public Coordinate(int x,int y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public int X { get; }
+        public int Y { get; }
+        public override string ToString()
+        {
+            return $"X:{X} Y:{Y}";
+        }
+    }
 }
