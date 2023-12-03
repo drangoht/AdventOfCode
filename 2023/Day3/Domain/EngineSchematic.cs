@@ -20,6 +20,8 @@ namespace Day3.Domain
                     part=CreateDotPart(line[x], x,y);
                 else if (char.IsNumber(line[x]))
                     (part,x) = CreateNumberPart(line, x, y);
+                else if (IsGear(line[x]))
+                    part = CreateGearPart(line[x], x, y);
                 else
                     part = CreateSymbolPart(line[x], x, y);
 
@@ -48,7 +50,33 @@ namespace Day3.Domain
             }
             return partsNearSymbol;
         }
-        private bool IsSymbolPresentOnPartsList(List<Part> parts) =>   parts.Any(p => p.PartType == PartType.Symbol);
+
+        public int GetMultiplyResultFromGearNeighbours()
+        {
+            int resultMult = 1;
+            int result = 0;
+            foreach (Part part in Parts.Where(p => p.PartType == PartType.Gear))
+            {
+
+                Coordinate coord = part.Coordinates.First();
+                var neighbourCoords = ListNeighbourCoordinates(coord);
+                var neighbourParts = GetPartsFromCoords(neighbourCoords);
+                //DisplayParts(neighbourParts);
+                resultMult = 0;
+                if (neighbourParts.Where(p =>p.PartType == PartType.Number).DistinctBy(p => p.Value).Count()==2)
+                {
+                    resultMult = 1;
+                    foreach (Part numberPart in neighbourParts.Where(p => p.PartType == PartType.Number).DistinctBy(p => p.Value))
+                    {
+                        resultMult *= Convert.ToInt32(numberPart.Value);
+                    }
+                }
+                
+                result += resultMult;
+            }
+            return result;
+        }
+        private bool IsSymbolPresentOnPartsList(List<Part> parts) =>   parts.Any(p => (p.PartType == PartType.Symbol) || (p.PartType == PartType.Gear));
 
         private List<Part> GetPartsFromCoords(List<Coordinate> coords)
         {
@@ -112,7 +140,18 @@ namespace Day3.Domain
                 PartType=PartType.Dot
             };
         }
+        private Part CreateGearPart(char car, int x, int y)
+        {
+            List<Coordinate> coords = new List<Coordinate>();
+            coords.Add(new(x, y));
+            return new Part()
+            {
 
+                Coordinates = coords,
+                Value = car.ToString(),
+                PartType = PartType.Gear
+            };
+        }
         private Part CreateSymbolPart(char car, int x, int y)
         {
             List<Coordinate> coords = new List<Coordinate>();
@@ -145,5 +184,6 @@ namespace Day3.Domain
             }, x-1);
         }
         private bool IsDot(char ch) => ch == '.';
+        private bool IsGear(char ch) => ch == '*';
     }
 }

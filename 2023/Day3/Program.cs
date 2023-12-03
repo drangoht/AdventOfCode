@@ -8,8 +8,12 @@ foreach (string line in File.ReadLines(@"Inputs\Input.txt"))
 {
     engineSchematic.AddPartsFromLine(line, y++);
 }
+// Part 1
 var partsFound = engineSchematic.GetNumberPartsNearSymbolPart();
-engineSchematic.DisplayParts(partsFound);
 int result = partsFound.Sum(p => Convert.ToInt32(p.Value));
+Console.WriteLine(result);
+
+// Part 2
+result = engineSchematic.GetMultiplyResultFromGearNeighbours();
 Console.WriteLine(result);
 Console.ReadLine();

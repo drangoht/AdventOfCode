@@ -10,6 +10,7 @@ namespace Day3.Domain
     {
         Number,
         Symbol,
+        Gear,
         Dot
     }
 }
