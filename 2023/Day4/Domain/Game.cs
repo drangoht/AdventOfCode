@@ -31,5 +31,32 @@ namespace Day4.Domain
             }
             Cards.Add(card);
         }
+
+        public void GenerateDuplicates()
+        {
+            foreach (Card card in Cards)
+            {
+                int winningCount = card.WinningCount();
+                for (int i = 0; i < card.CopyCount; i++)
+                {
+                    DuplicateForOneCard(card.Id, winningCount);
+                }
+            }
+        }
+        private void DuplicateForOneCard(int currentId,int duplicateCount)
+        {
+            int start = currentId + 1;
+            int end = currentId + duplicateCount +1 ;
+            for (int i = start; i < end; i++) 
+            {
+                if(Cards.Any(c => c.Id == i))
+                    Cards.First(c => c.Id == i).CopyCount++;
+            }
+        }
+
+        public int CountAllInstances()
+        {
+            return Cards.Sum(c => c.CopyCount);
+        }
     }
 }

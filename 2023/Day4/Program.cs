@@ -7,6 +7,12 @@ foreach (string line in File.ReadLines(@"Inputs\Input.txt"))
     game.AddCardFromLine(line);
 }
 
-var result = game.Cards.Sum(c => c.CalculateWorthCount());
-Console.WriteLine(result);
+// Part 1
+//var result = game.Cards.Sum(c => c.CalculateWorthCount());
+//Console.WriteLine(result);
+
+// Part 2
+game.GenerateDuplicates();
+int result2 = game.CountAllInstances();
+Console.WriteLine(result2);
 Console.ReadLine();

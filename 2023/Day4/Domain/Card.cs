@@ -12,6 +12,7 @@ namespace Day4.Domain
         public List<int> MyNumbers { get; set; } = [];
         public int Id { get; set; }
 
+        public int CopyCount { get; set; } = 1;
         private List<int> GetWinningNumbers()
         {
             return MyNumbers.Where(n => WinningNumbers.Contains(n)).ToList();
@@ -28,5 +29,7 @@ namespace Day4.Domain
             }
             return Convert.ToInt32(result);
         }
+        public int WinningCount() => GetWinningNumbers().Count();
+
     }
 }
