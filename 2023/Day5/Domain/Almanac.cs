@@ -43,7 +43,8 @@ namespace Day5.Domain
                     mapLines.Add(line);
                 }
             }
-            mapStrings.Add(mapLines);
+            if (mapLines.Count > 0)
+                mapStrings.Add(mapLines);
             foreach (var mapDatas in mapStrings) 
             {
                 Maps.Add(ParseMap(mapDatas));
@@ -58,12 +59,17 @@ namespace Day5.Domain
             var total = Seeds.Count;
             Int64 cptSeed = 0;
             Console.WriteLine($"Total: {total}");
+            Int64 oldpercent = 0;
             foreach  (Int64 seed in Seeds )
             {
-                var percent = (Int64)(((double)(cptSeed / total))*100);
-                if (percent > 0 && percent % 1 == 0)
-                    Console.WriteLine($"Pourcentage : {percent} {cptSeed}/{total}");
+                var percentVal = ((double)((double)cptSeed / (double)total));
+                var percent = (Int64)(percentVal * 100);
 
+                if ( oldpercent != percent)
+                {
+                    oldpercent = percent;
+                    Console.WriteLine($"Pourcentage : {percent}% {cptSeed}/{total}");
+                }
                 var currentLocation = GetLocationNumber(seed);
                 if (minLocation > currentLocation)
                 {
@@ -77,22 +83,13 @@ namespace Day5.Domain
         private Int64 GetLocationNumber(Int64 seed)
         {
             Int64 location = seed;
-            Console.WriteLine("------------");
-            Console.WriteLine(location);
             location = Maps.First(m => m.MapType == MapType.SeedToSoil).GetMatchingNumber(location);
-            Console.WriteLine(location);
             location = Maps.First(m => m.MapType == MapType.SoilToFertilizer).GetMatchingNumber(location);
-            Console.WriteLine(location);
             location = Maps.First(m => m.MapType == MapType.FertilizerToWater).GetMatchingNumber(location);
-            Console.WriteLine(location); 
             location = Maps.First(m => m.MapType == MapType.WaterToLight).GetMatchingNumber(location);
-            Console.WriteLine(location); 
             location = Maps.First(m => m.MapType == MapType.LightToTemperature).GetMatchingNumber(location);
-            Console.WriteLine(location); 
             location = Maps.First(m => m.MapType == MapType.TemperatureToHumitdity).GetMatchingNumber(location);
-            Console.WriteLine(location); 
             location = Maps.First(m => m.MapType == MapType.HumidityToLocation).GetMatchingNumber(location);
-            Console.WriteLine(location); 
             return location;
         }
         private Map ParseMap(List<string> lines)
@@ -128,7 +125,7 @@ namespace Day5.Domain
             Range range = new Range();
             var arrRange = line.Split(' ');
             range.Min = Convert.ToInt64(arrRange[1]);
-            range.Max = range.Min + Convert.ToInt64(arrRange[2]);
+            range.Max = range.Min + (Convert.ToInt64(arrRange[2])-1);
             range.MinDest = Convert.ToInt64(arrRange[0]);
             return range;
         }
