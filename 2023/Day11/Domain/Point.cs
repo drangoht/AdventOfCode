@@ -16,7 +16,7 @@ namespace Day11.Domain
         public bool Origin { get; set; } = false;
         public override string ToString()
         {
-            var display = $"Id:{Id} {X},{Y}";
+            var display = $"{X},{Y}";
             //{Origin}";
             //foreach(var point in ConnectedPoints)
             //{

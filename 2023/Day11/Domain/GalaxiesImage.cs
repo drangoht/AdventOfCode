@@ -9,50 +9,44 @@ namespace Day11.Domain
 {
     public class GalaxiesImage
     {
+        public int EmptyMultiplier { get; set; } = 2;
         List<Point> points = [];
+        List<int> linesToExpand = [];
+        List<int> colsToExpand = [];
         Graph<Point> graph = new Graph<Point>();
         public void ParseLineToPoints(List<string> lines)
         {
             List<string> expandedGalaxies = [];
+            
             int id = 1;
             int x = 0;
             int y = 0;
-            int maxDbl = 1;
-
-
+ 
+            // Calculate Cols and lines to expand
+            y = 0;
             List<char> curLine = [];
             foreach (var line in lines)
             {
-                maxDbl = 1;
+                x = 0;
                 if (!line.Contains("#"))
-                    maxDbl = 2;
+                    linesToExpand.Add(y);
+
                 
-                var cptDbl = 0;
-                while (cptDbl < maxDbl)
+                foreach (var car in line)
                 {
-                    //expandedGalaxies.Add(line);
-                    x = 0;
-                    curLine = [];
-                    foreach (var car in line)
-                    {
-                        curLine.Add(car);
-                        if (IsColEmpty( lines, x))
-                            curLine.Add(car);
-                        x++;
-                    }
-                    expandedGalaxies.Add(new string(curLine.ToArray()));
-                    y++;
-                    cptDbl++;
+                    if (IsColEmpty(lines, x))
+                        colsToExpand.Add(x);
+                    x++;
                 }
-                
+                y++;
+
             }
-            
-            foreach (var line in expandedGalaxies)
-            {
-                Console.WriteLine(line);
-            }
+            //foreach (var line in lines)
+            //{
+            //    Console.WriteLine(line);
+            //}
             y = 0;
-            foreach (var line in expandedGalaxies)
+            foreach (var line in lines)
             {
                 x = 0;
                 foreach (var car in line)
@@ -83,17 +77,38 @@ namespace Day11.Domain
             graph = new Graph<Point>(vertices, edges);
         }
 
-        public int CalculateAllDistancesBetweenGalaxies()
+        public Int64 CalculateAllDistancesBetweenGalaxies()
         {
             List<Tuple<int,int>> visited = new List<Tuple<int,int>>();
-            int resultSumDistances = 0;
-            for(int i=1;i<=points.Max(p => p.Id);i++)
+            Int64 resultSumDistances = 0;
+            int maxId = points.Max(p => p.Id);
+            for (int i = 1; i <= maxId; i++)
             {
-                var shortestPath = Algorithms.Algorithms.ShortestPathFunction(graph, points.First(p => p.Id==i));
-                for (int j = i+1; j <= points.Max(p => p.Id); j++)
+                var startPoint = points.First(p => p.Id == i);
+                var shortestPath = Algorithms.Algorithms.ShortestPathFunction(graph, startPoint);
+                for (int j = i + 1; j <= maxId; j++)
                 {
-                    resultSumDistances += shortestPath(points.First(p => p.Id == j)).Count()-1;
-                    //Console.WriteLine($" tot: {resultSumDistances} i:{i} {points.First(p => p.Id == i).ToString()} j:{j} {points.First(p => p.Id == j).ToString()} {shortestPath(points.First(p => p.Id == j)).Count()}");
+                    int cptPath = 1;
+                    var paths = shortestPath(points.First(p => p.Id == j));
+                    int pathsCount = paths.Count();
+                    while (cptPath< pathsCount)
+                    {
+                        var curPoint = paths.ToList()[cptPath];
+                        var nextPoint = new Point();
+                        var toExpand = false;
+                        if (cptPath+1< pathsCount)
+                        {
+                            nextPoint = paths.ToList()[cptPath+1];
+                        
+                            if (nextPoint.X != curPoint.X)
+                                toExpand = colsToExpand.Any(x => x==curPoint.X );
+                            else
+                                toExpand = linesToExpand.Any(y => y ==curPoint.Y);
+                        }
+                        resultSumDistances += toExpand ? EmptyMultiplier  : 1;
+                        cptPath++;
+                    }
+                    
                 }
             }
             return resultSumDistances;
@@ -116,20 +131,11 @@ namespace Day11.Domain
             if (p is not null) points.Add(p);
             p = GetPoint(x, y + 1);
             if (p is not null) points.Add(p);
-
-            //p = GetPoint(x - 1, y - 1);
-            //if (p is not null) points.Add(p);
             p = GetPoint(x - 1, y);
             if (p is not null) points.Add(p);
-            //p = GetPoint(x - 1, y + 1);
-            //if (p is not null) points.Add(p);
 
-            //p = GetPoint(x + 1, y - 1);
-            //if (p is not null) points.Add(p);
             p = GetPoint(x + 1, y );
             if (p is not null) points.Add(p);
-            //p = GetPoint(x + 1, y + 1);
-            //if (p is not null) points.Add(p);
 
             return points;
         }
