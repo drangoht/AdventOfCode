@@ -48,7 +48,6 @@ namespace Day10.Domain
             }
 
             graph = new Graph<Point>(vertices, edges);
-            var a = graph.AdjacencyList.Count();
         }
 
         public int FindLongestPath()
